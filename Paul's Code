@@ -1,0 +1,38 @@
+import numpy as np
+import matplotlib.pyplot as plt
+import pandas as pd
+import seaborn as sns
+
+# Question 1
+file_path = "/Users/paulwilliams/Downloads/Lab 6 - Boston Housing Data.csv"
+dataset = pd.read_csv(file_path)
+X = dataset.iloc[:, :-1].values
+y = dataset.iloc[:, -1].values
+print(X)
+print(y)
+
+print(dataset.shape)
+
+print(dataset.head())
+
+print(dataset.info())
+
+print(dataset.describe())
+
+print(dataset.isnull().sum())
+
+dataset = dataset.fillna(dataset.mean())
+
+print(dataset.isnull().sum())
+
+# Question 2
+sns.histplot(dataset['MEDV'], bins=30, kde=True)
+plt.title('Distribution of Median House Value')
+plt.xlabel('MEDV')
+plt.show()
+
+sns.histplot(dataset['AGE'], bins=30, kde=True)
+plt.title('Distribution of Age')
+plt.xlabel('Age')
+plt.show()
+
