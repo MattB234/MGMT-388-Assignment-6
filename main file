@@ -72,6 +72,16 @@ print( "R^2 Score:", r2_score(y_test,y_pred))
 
 # Question 5
 # Prediction of the Test set
-y_pred = regressor.predict(X_test)
+y_pred = lr.predict(X_test)
 np.set_printoptions(precision=2)
 print(np.concatenate((y_pred.reshape(-1,1), y_test.to_numpy().reshape(-1, 1)), axis=1))
+
+# Scatterplot displaying the actual (y_test) vs. predicted (y_pred) housing prices
+plt.scatter(y_test, y_pred)
+plt.plot([y_test.min(), y_test.max()], [y_test.min(), y_test.max()], '-', color ='orange')
+plt.grid(True)
+plt.xlabel("Actual MEDV")
+plt.ylabel("Predicted MEDV")
+plt.title("Actual vs. Predicted MEDV")
+plt.show()
+
