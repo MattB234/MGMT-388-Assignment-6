@@ -99,6 +99,10 @@ y_pred = lr.predict(X_test)
 np.set_printoptions(precision=2)
 print(np.concatenate((y_pred.reshape(-1,1), y_test.to_numpy().reshape(-1, 1)), axis=1))
 
+# Evaluation of model's performance using Mean Squared Error and R-squared
+print( "Mean Squared Error:", mean_squared_error(y_test,y_pred))
+print( "R^2 Score:", r2_score(y_test,y_pred))
+
 # Scatterplot displaying the actual (y_test) vs. predicted (y_pred) housing prices
 plt.scatter(y_test, y_pred)
 plt.plot([y_test.min(), y_test.max()], [y_test.min(), y_test.max()], '-', color ='orange')
@@ -108,3 +112,5 @@ plt.ylabel("Predicted MEDV")
 plt.title("Actual vs. Predicted MEDV")
 plt.show()
 
+With the R^2 value being 0.57, 57% of the variability in housing prices is explained by our model. 
+The MSE value being 34.99 shows the average squared difference between the predicted and actual median housing prices. The square root of the MSE value is 5.915. Since MEDV is measured in $1000s, on average, the model is off by $5915 when predicting the housing prices of Boston.
