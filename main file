@@ -4,7 +4,7 @@ import pandas as pd
 import seaborn as sns
 
 # Question 1
-file_path = "/Users/13212/Downloads/Lab 6 - Boston Housing Data.csv"
+file_path = "/Users/paulwilliams/Downloads/Lab 6 - Boston Housing Data.csv"
 dataset = pd.read_csv(file_path)
 X = dataset.iloc[:, :-1].values
 y = dataset.iloc[:, -1].values
@@ -23,18 +23,41 @@ print(dataset.isnull().sum())
 
 dataset = dataset.fillna(dataset.mean())
 
+We used mean imputation to replace the missing values in the six columns because it affected a small portion of the data and spanned across multiple columns that are important.
+
 print(dataset.isnull().sum())
 
 # Question 2
 sns.histplot(dataset['MEDV'], bins=30, kde=True)
 plt.title('Distribution of Median House Value')
 plt.xlabel('MEDV')
-plt.show()
+
+The histogram shows that the median value of owner occupied homes in Boston is on average 20,000 to 25,000 dollars.
 
 sns.histplot(dataset['AGE'], bins=30, kde=True)
 plt.title('Distribution of Age')
 plt.xlabel('Age')
-plt.show()
+
+This histogram visualizes the data we discovered when we printed the data set's description. It supports the high mean of age and its mode being around 100. To understand, it is essential to understand the variable Age itself. Age represents the proportion of owner-occupied homes built before 1940 so our histogram shows that most of the neighborhoods contains older homes built before 1940.
+
+plt.figure(figsize=(12, 10))
+sns.heatmap(dataset.corr(), annot=True, cmap='coolwarm')
+plt.title('Correlation Heatmap')
+
+Although we have not focused much on such correlation heat maps, it is very usual for visualizing this data especially the correlation between different variables. As we can see Tax and RAD (property tax rate and index of accessibility to radial highways) have a correlation coefficient of 0.91 since due to public planning and policy in Boston, houses near highways have high tax rates. Also, tax and industry usage and separately median value and average number of rooms are naturally close to 1 as well. Industry usage and distance to employment centers, and median value and percent lower status of the population are both highly negatively correlated, close to -1. 
+
+sns.scatterplot(x='AGE', y='MEDV', data=dataset)
+plt.title('AGE vs MEDV')
+plt.xlabel('% of Homes Built Before 1940 (AGE)')
+plt.ylabel('Median House Value (MEDV)')
+
+We feel it was important to visualize the relationship between the age of Boston's houses and their median value to see if more aged houses added or subtracted value. As we can see there is not a strong relationship present. However, with the results from the previous heatmap and this scatter plot, there is a sizable enough negative relationship between the two around r = -0.4 so older houses tend to lose value.
+
+sns.histplot(dataset['LSTAT'], bins=30, kde=True)
+plt.title('Distribution of Lower Status Population (%)')
+plt.xlabel('LSTAT')
+
+Lastly, we want to visualize LSTAT in a histogram in visualize Boston's socioeconomic distribution. The histogram is heavily skewed right with the majority of values falling around 10-15, so most Boston neighborhoods have a low percentage of lower status population. Most homes are in safer areas and as we saw previously, those that are not have lower median value. 
 
 # Question 3
 from sklearn.model_selection import train_test_split
